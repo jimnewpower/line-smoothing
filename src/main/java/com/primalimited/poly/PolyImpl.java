@@ -53,6 +53,13 @@ public class PolyImpl implements Poly {
     }
 
     @Override
+    public void closePolygon() {
+        if (isClosedPolygon() || size() == 0)
+            return;
+        add(vertices.get(0));
+    }
+
+    @Override
     public List<Coordinate> ordered() {
         // return defensive copy
         return Collections.unmodifiableList(vertices);
