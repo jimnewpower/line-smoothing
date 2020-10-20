@@ -23,24 +23,23 @@ public class ChaikinSmootherTest {
 
         Poly smoothed = new ChaikinSmoother().smooth(original);
         assertNotNull("smoothed", smoothed);
-        assertEquals(7, smoothed.size());
+        assertEquals(6, smoothed.size());
 
         List<Coordinate> coords = smoothed.ordered();
         int index = 0;
         assertEquals(coords.get(index).toString(), Coordinate.of(0, 0), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(2.5, 2.5), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(7.5, 7.5), coords.get(index++));
-        assertEquals(coords.get(index).toString(), Coordinate.of(10, 10), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(12.5, 7.5), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(17.5, 2.5), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(20, 0), coords.get(index++));
 
         smoothed = new ChaikinSmoother().smooth(smoothed);
-        assertEquals(19, smoothed.size());
+        assertEquals(12, smoothed.size());
         assertFalse(smoothed.isClosedPolygon());
 
         smoothed = new ChaikinSmoother().smooth(smoothed);
-        assertEquals(55, smoothed.size());
+        assertEquals(24, smoothed.size());
         assertFalse(smoothed.isClosedPolygon());
     }
 
@@ -57,28 +56,25 @@ public class ChaikinSmootherTest {
 
         Poly smoothed = new ChaikinSmoother().smooth(original);
         assertNotNull("smoothed", smoothed);
-        assertEquals(10, smoothed.size());
+        assertEquals(7, smoothed.size());
         assertTrue(smoothed.isClosedPolygon());
 
         List<Coordinate> coords = smoothed.ordered();
         int index = 0;
-        assertEquals(coords.get(index).toString(), Coordinate.of(0, 0), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(2.5, 2.5), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(7.5, 7.5), coords.get(index++));
-        assertEquals(coords.get(index).toString(), Coordinate.of(10, 10), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(12.5, 7.5), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(17.5, 2.5), coords.get(index++));
-        assertEquals(coords.get(index).toString(), Coordinate.of(20, 0), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(15, 0), coords.get(index++));
         assertEquals(coords.get(index).toString(), Coordinate.of(5, 0), coords.get(index++));
-        assertEquals(coords.get(index).toString(), Coordinate.of(0, 0), coords.get(index++));
+        assertEquals(coords.get(index).toString(), Coordinate.of(2.5, 2.5), coords.get(index++));
 
         smoothed = new ChaikinSmoother().smooth(smoothed);
-        assertEquals(28, smoothed.size());
+        assertEquals(13, smoothed.size());
         assertTrue(smoothed.isClosedPolygon());
 
         smoothed = new ChaikinSmoother().smooth(smoothed);
-        assertEquals(82, smoothed.size());
+        assertEquals(25, smoothed.size());
         assertTrue(smoothed.isClosedPolygon());
     }
 }

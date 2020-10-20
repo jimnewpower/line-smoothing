@@ -32,16 +32,24 @@ public class ChaikinSmoother implements PolySmoother {
         float largeFraction = 1.f - fraction;
 
         int size = original.size();
+
+        if (!poly.isClosedPolygon()) {
+            smoothed.add(original.get(0));
+        }
+
         /* loop on original poly, adding line segment midpoints and adjusting vertices */
         for (int index = 0; index < size -1; index++) {
             Coordinate c0 = original.get(index);
             Coordinate c1 = original.get(index + 1);
 
-            smoothed.add(c0);
             smoothed.add(Coordinate.between(c0, c1, fraction));
             smoothed.add(Coordinate.between(c0, c1, largeFraction));
         }
-        smoothed.add(original.get(size - 1));
+
+        if (!poly.isClosedPolygon())
+            smoothed.add(original.get(size - 1));
+        else
+            smoothed.closePolygon();
 
         return smoothed;
     }
