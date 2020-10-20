@@ -18,3 +18,6 @@ Smoothing for polylines and polygons. Implementation of George Chaikin's corner-
 
 ## Example 6 (Polygon with 6 iterations)
 ![alt text](./src/main/resources/chaikin-2.png "Example 6")
+
+## Example 7 (Polyline with 4 iterations)
+![alt text](./src/main/resources/polyline-4.png "Example 7")
