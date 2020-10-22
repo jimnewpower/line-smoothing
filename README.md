@@ -1,4 +1,4 @@
-![Java CI](https://github.com/jimnewpower/line-smoothing/workflows/Java%20CI/badge.svg)
+![Java CI](https://github.com/jimnewpower/core/workflows/Java%20CI/badge.svg)
 
 # line-smoothing
 Smoothing for polylines and polygons. Implementation of George Chaikin's corner-cutting smoothing algorithm. By iterating on calls to the algorithm, more smoothness will be achieved.
