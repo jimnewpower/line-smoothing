@@ -1,5 +1,4 @@
 [![codecov](https://codecov.io/gh/jimnewpower/line-smoothing/branch/master/graph/badge.svg?token=YULIH50YWG)](undefined)
-[//]: <> ![](https://codecov.io/gh/jimnewpower/line-smoothing/branch/master/graphs/sunburst.svg)
 
 # line-smoothing
 Smoothing for polylines and polygons. Implementation of George Chaikin's corner-cutting smoothing algorithm. By iterating on calls to the algorithm, more smoothness will be achieved.
