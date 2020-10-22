@@ -1,9 +1,5 @@
 package com.primalimited.poly;
 
-import com.primalimited.poly.ChaikinSmoother;
-import com.primalimited.poly.Coordinate;
-import com.primalimited.poly.Poly;
-import com.primalimited.poly.PolyImpl;
 import org.junit.Test;
 
 import java.util.List;
@@ -11,6 +7,14 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ChaikinSmootherTest {
+    @Test
+    public void testConstants() {
+        assertEquals("minimum vertices", 3, ChaikinSmoother.MINIMUM_POLY_N_VERTICES);
+        assertEquals("default fraction", 0.25f, ChaikinSmoother.CHAIKIN_FRACTION_DEFAULT, 1e-5);
+        assertEquals("minimum fraction", 0.05f, ChaikinSmoother.CHAIKIN_FRACTION_MINIMUM, 1e-5);
+        assertEquals("maximum fraction", 0.45f, ChaikinSmoother.CHAIKIN_FRACTION_MAXIMUM, 1e-5);
+    }
+
     @Test
     public void testChaikinPolyline() {
         Poly original = new PolyImpl();
@@ -76,5 +80,62 @@ public class ChaikinSmootherTest {
         smoothed = new ChaikinSmoother().smooth(smoothed);
         assertEquals(25, smoothed.size());
         assertTrue(smoothed.isClosedPolygon());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void nullPolyArgShouldThrow() {
+        new ChaikinSmoother().smooth(null);
+    }
+
+    @Test
+    public void tooSmallShouldReturnSame() {
+        Poly original = new PolyImpl();
+        Poly smoothed = new ChaikinSmoother().smooth(original);
+        assertEquals("zero size should be equal", original, smoothed);
+
+        original.add(Coordinate.of(0, 0));
+        smoothed = new ChaikinSmoother().smooth(original);
+        assertEquals("size==1 should be equal", original, smoothed);
+
+        original.add(Coordinate.of(10, 10));
+        smoothed = new ChaikinSmoother().smooth(original);
+        assertEquals("size==2 should be equal", original, smoothed);
+    }
+
+    @Test
+    public void customFractionBounds() {
+        // fraction too small should be adjusted to the minimum
+        float customFraction = 0.0f;
+        ChaikinSmoother smoother = new ChaikinSmoother(customFraction);
+        assertEquals(ChaikinSmoother.CHAIKIN_FRACTION_MINIMUM, smoother.getChaikinFraction(), 1e-5);
+
+        // fraction too large should be adjusted to the maximum
+        customFraction = 1.0f;
+        smoother = new ChaikinSmoother(customFraction);
+        assertEquals(ChaikinSmoother.CHAIKIN_FRACTION_MAXIMUM, smoother.getChaikinFraction(), 1e-5);
+    }
+
+    @Test
+    public void customFraction() {
+        Poly original = new PolyImpl();
+        original.add(Coordinate.of(0, 0));
+        original.add(Coordinate.of(10, 10));
+        original.add(Coordinate.of(20, 0));
+        original.add(Coordinate.of(0, 0));
+
+        // sanity check: for polygon
+        assertTrue(original.isClosedPolygon());
+
+        float customFraction = 0.33f;
+        ChaikinSmoother smoother = new ChaikinSmoother(customFraction);
+        assertEquals(customFraction, smoother.getChaikinFraction(), 1e-5);
+        Poly smoothed = smoother.smooth(original);
+        assertNotNull("smoothed", smoothed);
+        assertEquals(7, smoothed.size());
+        assertTrue(smoothed.isClosedPolygon());
+
+        String expected =
+                "PolyImpl{vertices=[CoordinateImpl{x=3.3000001311302185, y=3.3000001311302185}, CoordinateImpl{x=6.699999570846558, y=6.699999570846558}, CoordinateImpl{x=13.300000131130219, y=6.6999998688697815}, CoordinateImpl{x=16.699999570846558, y=3.3000004291534424}, CoordinateImpl{x=13.399999737739563, y=0.0}, CoordinateImpl{x=6.600000858306885, y=0.0}, CoordinateImpl{x=3.3000001311302185, y=3.3000001311302185}]}";
+        assertEquals(expected, smoothed.toString());
     }
 }

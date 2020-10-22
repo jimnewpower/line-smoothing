@@ -54,7 +54,7 @@ public class PolyImpl implements Poly {
 
     @Override
     public void closePolygon() {
-        if (isClosedPolygon() || size() == 0)
+        if (isClosedPolygon() || size() < 3)
             return;
         add(vertices.get(0));
     }

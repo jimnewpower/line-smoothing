@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChaikinSmoother implements PolySmoother {
-    private static final float CHAIKIN_FRACTION_DEFAULT = 0.25f;
+    static final int MINIMUM_POLY_N_VERTICES = 3;
+    static final float CHAIKIN_FRACTION_DEFAULT = 0.25f;
+    static final float CHAIKIN_FRACTION_MINIMUM = 0.05f;
+    static final float CHAIKIN_FRACTION_MAXIMUM = 0.45f;
 
     private final float fraction;
 
@@ -14,16 +17,22 @@ public class ChaikinSmoother implements PolySmoother {
 
     public ChaikinSmoother(float fraction) {
         float fractionToUse = fraction;
-        if (fractionToUse <= 0.f || fractionToUse >= 1.f)
-            fractionToUse = CHAIKIN_FRACTION_DEFAULT;
+        if (fractionToUse < CHAIKIN_FRACTION_MINIMUM)
+            fractionToUse = CHAIKIN_FRACTION_MINIMUM;
+        if (fractionToUse > CHAIKIN_FRACTION_MAXIMUM)
+            fractionToUse = CHAIKIN_FRACTION_MAXIMUM;
         this.fraction = fractionToUse;
+    }
+
+    float getChaikinFraction() {
+        return fraction;
     }
 
     @Override
     public Poly smooth(Poly poly) {
         Objects.requireNonNull(poly, "poly");
 
-        if (poly.size() < 1)
+        if (poly.size() < MINIMUM_POLY_N_VERTICES)
             return poly;
 
         List<Coordinate> original = poly.ordered();
