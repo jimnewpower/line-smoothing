@@ -23,4 +23,16 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew clean build jacocoTestReport
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./build/coverage.xml
+        files: ./coverage1.xml,./coverage2.xml
+        directory: ./build/jacocoCoverage/test
+        flags: unittests
+        env_vars: OS,PYTHON
+        name: codecov-line-smoothing
+        fail_ci_if_error: true
+        path_to_write_report: ./coverage/codecov_report.gz
+        verbose: true
