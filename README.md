@@ -3,6 +3,18 @@
 # line-smoothing
 Smoothing for polylines and polygons. Implementation of George Chaikin's corner-cutting smoothing algorithm. By iterating on calls to the algorithm, more smoothness will be achieved.
 
+# code example
+```
+Poly original = new PolyImpl();
+original.add(Coordinate.of(0, 0));
+original.add(Coordinate.of(10, 0));
+original.add(Coordinate.of(10, 10));
+original.add(Coordinate.of(0, 10));
+original.closePolygon();
+
+Poly smoothed = new ChaikinSmoother().smooth(original);
+```
+
 ## Example 1 (Square with 1 iteration)
 ![](./src/main/resources/chaikin-square-1.png)
 
