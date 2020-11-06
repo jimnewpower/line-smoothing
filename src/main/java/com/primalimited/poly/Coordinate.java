@@ -13,4 +13,12 @@ public interface Coordinate {
 
     double getX();
     double getY();
+
+    default boolean valid() {
+        return valid(getX()) && valid(getY());
+    }
+
+    static boolean valid(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value);
+    }
 }

@@ -168,4 +168,39 @@ public class PolyTest {
         original.closePolygon();
         assertEquals("size", 2, original.size());
     }
+
+    @Test
+    public void valid() {
+        Poly poly = new PolyImpl();
+        assertTrue("Expect empty polygon to be valid.", poly.valid());
+
+        poly.add(Coordinate.of(0, 0));
+        assertTrue("Expect polygon to be valid.", poly.valid());
+
+        poly.add(Coordinate.of(0, 10));
+        assertTrue("Expect polygon to be valid.", poly.valid());
+    }
+
+    @Test
+    public void invalid() {
+        Poly poly = new PolyImpl();
+
+        poly.add(Coordinate.of(Double.NEGATIVE_INFINITY, 0));
+        assertFalse("Expect polygon to be invalid.", poly.valid());
+
+        poly.add(Coordinate.of(Double.POSITIVE_INFINITY, 0));
+        assertFalse("Expect polygon to be invalid.", poly.valid());
+
+        poly.add(Coordinate.of(Double.NaN, 0));
+        assertFalse("Expect polygon to be invalid.", poly.valid());
+
+        poly.add(Coordinate.of(0, Double.NEGATIVE_INFINITY));
+        assertFalse("Expect polygon to be invalid.", poly.valid());
+
+        poly.add(Coordinate.of(0, Double.POSITIVE_INFINITY));
+        assertFalse("Expect polygon to be invalid.", poly.valid());
+
+        poly.add(Coordinate.of(0, Double.NaN));
+        assertFalse("Expect polygon to be invalid.", poly.valid());
+    }
 }

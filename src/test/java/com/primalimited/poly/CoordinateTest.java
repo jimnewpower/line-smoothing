@@ -85,4 +85,34 @@ public class CoordinateTest {
         c = Coordinate.between(c0, c1, -10.f);
         assertEquals(Coordinate.of(-100, -90), c);
     }
+
+    @Test
+    public void invalidNaN() {
+        Coordinate c0 = Coordinate.of(Double.NaN, 0);
+        assertFalse("NaN x should be invalid", c0.valid());
+
+        c0 = Coordinate.of(0, Double.NaN);
+        assertFalse("NaN y should be invalid", c0.valid());
+    }
+
+    @Test
+    public void invalidInfinity() {
+        Coordinate c0 = Coordinate.of(Double.POSITIVE_INFINITY, 0);
+        assertFalse("NaN x should be invalid", c0.valid());
+
+        c0 = Coordinate.of(0, Double.POSITIVE_INFINITY);
+        assertFalse("NaN y should be invalid", c0.valid());
+
+        c0 = Coordinate.of(Double.NEGATIVE_INFINITY, 0);
+        assertFalse("NaN x should be invalid", c0.valid());
+
+        c0 = Coordinate.of(0, Double.NEGATIVE_INFINITY);
+        assertFalse("NaN y should be invalid", c0.valid());
+    }
+
+    @Test
+    public void valid() {
+        Coordinate c0 = Coordinate.of(0, 0);
+        assertTrue("Should be valid", c0.valid());
+    }
 }

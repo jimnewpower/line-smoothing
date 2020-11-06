@@ -3,6 +3,11 @@ package com.primalimited.poly;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Chaikin line smoothing algorithm implementation.
+ * G. M. Chaikin, “An algorithm for high-speed curve generation,
+ * Computer Graphics andImage Processing,”vol. 3, 1974, pp. 346-349.
+ */
 public class ChaikinSmoother implements PolySmoother {
     static final int MINIMUM_POLY_N_VERTICES = 3;
     static final float CHAIKIN_FRACTION_DEFAULT = 0.25f;
@@ -31,6 +36,8 @@ public class ChaikinSmoother implements PolySmoother {
     @Override
     public Poly smooth(Poly poly) {
         Objects.requireNonNull(poly, "poly");
+        if (!poly.valid())
+            throw new IllegalArgumentException("Poly argument contains invalid vertices.");
 
         if (poly.size() < MINIMUM_POLY_N_VERTICES)
             return poly;
@@ -38,13 +45,12 @@ public class ChaikinSmoother implements PolySmoother {
         List<Coordinate> original = poly.ordered();
         Poly smoothed = new PolyImpl();
 
-        float largeFraction = 1.f - fraction;
+        final float largeFraction = 1.f - fraction;
 
         int size = original.size();
 
-        if (!poly.isClosedPolygon()) {
+        if (!poly.isClosedPolygon())
             smoothed.add(original.get(0));
-        }
 
         /* loop on original poly, adding line segment midpoints and adjusting vertices */
         for (int index = 0; index < size -1; index++) {

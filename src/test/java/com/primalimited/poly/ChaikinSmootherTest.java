@@ -138,4 +138,11 @@ public class ChaikinSmootherTest {
                 "PolyImpl{vertices=[CoordinateImpl{x=3.3000001311302185, y=3.3000001311302185}, CoordinateImpl{x=6.699999570846558, y=6.699999570846558}, CoordinateImpl{x=13.300000131130219, y=6.6999998688697815}, CoordinateImpl{x=16.699999570846558, y=3.3000004291534424}, CoordinateImpl{x=13.399999737739563, y=0.0}, CoordinateImpl{x=6.600000858306885, y=0.0}, CoordinateImpl{x=3.3000001311302185, y=3.3000001311302185}]}";
         assertEquals(expected, smoothed.toString());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidPoly() {
+        Poly invalidPoly = new PolyImpl();
+        invalidPoly.add(Coordinate.of(Double.NaN, Double.NEGATIVE_INFINITY));
+        new ChaikinSmoother().smooth(invalidPoly);
+    }
 }
