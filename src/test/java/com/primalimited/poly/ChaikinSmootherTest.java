@@ -3,6 +3,7 @@ package com.primalimited.poly;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -13,6 +14,30 @@ public class ChaikinSmootherTest {
         assertEquals("default fraction", 0.25f, ChaikinSmoother.CHAIKIN_FRACTION_DEFAULT, 1e-5);
         assertEquals("minimum fraction", 0.05f, ChaikinSmoother.CHAIKIN_FRACTION_MINIMUM, 1e-5);
         assertEquals("maximum fraction", 0.45f, ChaikinSmoother.CHAIKIN_FRACTION_MAXIMUM, 1e-5);
+    }
+
+    @Test
+    public void perfectSquarePolygon() {
+        Poly original = new PolyImpl();
+        original.add(Coordinate.of(0, 0));
+        original.add(Coordinate.of(10, 0));
+        original.add(Coordinate.of(10, 10));
+        original.add(Coordinate.of(0, 10));
+        original.closePolygon();
+
+        Poly smoothed = new ChaikinSmoother().smooth(original);
+        List<Coordinate> vertices = smoothed.ordered().stream().collect(Collectors.toList());
+        assertEquals(9, vertices.size());
+        int index = 0;
+        assertEquals(Coordinate.of(2.5, 0), vertices.get(index++));
+        assertEquals(Coordinate.of(7.5, 0), vertices.get(index++));
+        assertEquals(Coordinate.of(10, 2.5), vertices.get(index++));
+        assertEquals(Coordinate.of(10, 7.5), vertices.get(index++));
+        assertEquals(Coordinate.of(7.5, 10), vertices.get(index++));
+        assertEquals(Coordinate.of(2.5, 10), vertices.get(index++));
+        assertEquals(Coordinate.of(0, 7.5), vertices.get(index++));
+        assertEquals(Coordinate.of(0, 2.5), vertices.get(index++));
+        assertEquals(Coordinate.of(2.5, 0), vertices.get(index++));
     }
 
     @Test
