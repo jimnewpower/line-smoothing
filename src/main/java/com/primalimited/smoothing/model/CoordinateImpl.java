@@ -1,8 +1,8 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.model;
 
 import java.util.Objects;
 
-public class CoordinateImpl implements Coordinate {
+class CoordinateImpl implements Coordinate {
     private final double x;
     private final double y;
 

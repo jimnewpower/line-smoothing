@@ -5,7 +5,7 @@ Smoothing for polylines and polygons. Implementation of George Chaikin's corner-
 
 # code example
 ```
-Poly original = new PolyImpl();
+Poly original = Poly.create();
 original.add(Coordinate.of(0, 0));
 original.add(Coordinate.of(10, 0));
 original.add(Coordinate.of(10, 10));

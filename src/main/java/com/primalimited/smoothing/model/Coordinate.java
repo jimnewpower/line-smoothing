@@ -1,4 +1,4 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.model;
 
 public interface Coordinate {
     static Coordinate of(double x, double y) {

@@ -1,4 +1,7 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.compute;
+
+import com.primalimited.smoothing.model.Coordinate;
+import com.primalimited.smoothing.model.Poly;
 
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +46,7 @@ public class ChaikinSmoother implements PolySmoother {
             return poly;
 
         List<Coordinate> original = poly.ordered();
-        Poly smoothed = new PolyImpl();
+        Poly smoothed = Poly.create();
 
         final float largeFraction = 1.f - fraction;
 

@@ -1,11 +1,11 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class PolyImpl implements Poly {
+class PolyImpl implements Poly {
     private List<Coordinate> vertices;
 
     public PolyImpl() {

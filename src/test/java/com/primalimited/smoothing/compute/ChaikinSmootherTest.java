@@ -1,5 +1,7 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.compute;
 
+import com.primalimited.smoothing.model.Coordinate;
+import com.primalimited.smoothing.model.Poly;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public class ChaikinSmootherTest {
 
     @Test
     public void perfectSquarePolygon() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         original.add(Coordinate.of(0, 0));
         original.add(Coordinate.of(10, 0));
         original.add(Coordinate.of(10, 10));
@@ -42,7 +44,7 @@ public class ChaikinSmootherTest {
 
     @Test
     public void testChaikinPolyline() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         original.add(Coordinate.of(0, 0));
         original.add(Coordinate.of(10, 10));
         original.add(Coordinate.of(20, 0));
@@ -74,7 +76,7 @@ public class ChaikinSmootherTest {
 
     @Test
     public void testChaikinPolygon() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         original.add(Coordinate.of(0, 0));
         original.add(Coordinate.of(10, 10));
         original.add(Coordinate.of(20, 0));
@@ -114,7 +116,7 @@ public class ChaikinSmootherTest {
 
     @Test
     public void tooSmallShouldReturnSame() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         Poly smoothed = new ChaikinSmoother().smooth(original);
         assertEquals("zero size should be equal", original, smoothed);
 
@@ -142,7 +144,7 @@ public class ChaikinSmootherTest {
 
     @Test
     public void customFraction() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         original.add(Coordinate.of(0, 0));
         original.add(Coordinate.of(10, 10));
         original.add(Coordinate.of(20, 0));
@@ -166,7 +168,7 @@ public class ChaikinSmootherTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidPoly() {
-        Poly invalidPoly = new PolyImpl();
+        Poly invalidPoly = Poly.create();
         invalidPoly.add(Coordinate.of(Double.NaN, Double.NEGATIVE_INFINITY));
         new ChaikinSmoother().smooth(invalidPoly);
     }

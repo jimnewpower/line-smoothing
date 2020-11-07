@@ -1,4 +1,4 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.model;
 
 import java.util.List;
 
@@ -6,6 +6,14 @@ import java.util.List;
  * Represents a polyline, which may or may not be a closed polygon
  */
 public interface Poly {
+    public static Poly create() {
+        return new PolyImpl();
+    }
+
+    public static Poly create(List<Coordinate> vertices) {
+        return new PolyImpl(vertices);
+    }
+
     /**
      * Number of vertices.
      * @return number of vertices

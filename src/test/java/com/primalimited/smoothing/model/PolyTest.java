@@ -1,5 +1,7 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.model;
 
+import com.primalimited.smoothing.model.Coordinate;
+import com.primalimited.smoothing.model.Poly;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class PolyTest {
         coordinate = Coordinate.of(14, 23);
         vertices.add(coordinate);
 
-        Poly poly = new PolyImpl(vertices);
+        Poly poly = Poly.create(vertices);
         assertEquals(3, poly.size());
 
         List<Coordinate> coordinates = poly.ordered();
@@ -32,7 +34,7 @@ public class PolyTest {
     public void testToString() {
         Coordinate coordinate = Coordinate.of(1, 2);
 
-        Poly poly0 = new PolyImpl();
+        Poly poly0 = Poly.create();
         poly0.add(coordinate);
 
         String expected = "PolyImpl{vertices=[CoordinateImpl{x=1.0, y=2.0}]}";
@@ -43,10 +45,10 @@ public class PolyTest {
     public void testEquals() {
         Coordinate sharedCoordinate = Coordinate.of(3, 6);
 
-        Poly poly0 = new PolyImpl();
+        Poly poly0 = Poly.create();
         poly0.add(sharedCoordinate);
 
-        Poly poly1 = new PolyImpl();
+        Poly poly1 = Poly.create();
         poly1.add(sharedCoordinate);
 
         assertTrue("should be equal", poly0.equals(poly1));
@@ -55,7 +57,7 @@ public class PolyTest {
 
     @Test
     public void testInequality() {
-        Poly poly = new PolyImpl();
+        Poly poly = Poly.create();
         assertFalse("equals(null)", poly.equals(null));
         assertFalse("equals(wrong type)", poly.equals(Coordinate.of(0, 0)));
     }
@@ -64,25 +66,25 @@ public class PolyTest {
     public void testHashCode() {
         Coordinate sharedCoordinate = Coordinate.of(3, 6);
 
-        Poly poly0 = new PolyImpl();
+        Poly poly0 = Poly.create();
         poly0.add(sharedCoordinate);
 
-        Poly poly1 = new PolyImpl();
+        Poly poly1 = Poly.create();
         poly1.add(sharedCoordinate);
 
         assertEquals("should be equal", poly0.hashCode(), poly1.hashCode());
 
-        assertNotEquals("should be different", poly0.hashCode(), new PolyImpl().hashCode());
+        assertNotEquals("should be different", poly0.hashCode(), Poly.create().hashCode());
     }
 
     @Test
     public void testNotEquals() {
         Coordinate c0 = Coordinate.of(3, 6);
-        Poly poly0 = new PolyImpl();
+        Poly poly0 = Poly.create();
         poly0.add(c0);
 
         Coordinate c1 = Coordinate.of(4, 8);
-        Poly poly1 = new PolyImpl();
+        Poly poly1 = Poly.create();
         poly1.add(c1);
 
         assertFalse("should not be equal", poly0.equals(poly1));
@@ -91,7 +93,7 @@ public class PolyTest {
 
     @Test
     public void testAddNullVertex() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         original.add(Coordinate.of(0, 0));
         assertEquals("size", 1, original.size());
 
@@ -101,7 +103,7 @@ public class PolyTest {
 
     @Test
     public void testPolygon() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         original.add(Coordinate.of(0, 0));
         original.add(Coordinate.of(10, 10));
         original.add(Coordinate.of(20, 0));
@@ -112,7 +114,7 @@ public class PolyTest {
 
     @Test
     public void testNotAPolygon() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         original.add(Coordinate.of(0, 0));
         original.add(Coordinate.of(10, 10));
         original.add(Coordinate.of(20, 0));
@@ -122,7 +124,7 @@ public class PolyTest {
 
     @Test
     public void testIsClosedPolygonEdgeCases() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         assertFalse("polygon with zero vertices cannot be closed", original.isClosedPolygon());
 
         original.add(Coordinate.of(3, 6));
@@ -131,7 +133,7 @@ public class PolyTest {
 
     @Test
     public void testAlreadyClosedPolygonShouldNotAddVertex() {
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
         // create a simple polygon (triangle)
         original.add(Coordinate.of(0, 0));
         original.add(Coordinate.of(5, 5));
@@ -149,7 +151,7 @@ public class PolyTest {
     @Test
     public void testInvalidPolygonShouldNotClose() {
         // An invalid polygon (non-closable) has less than 3 vertices
-        Poly original = new PolyImpl();
+        Poly original = Poly.create();
 
         // zero vertices
         assertEquals("size", 0, original.size());
@@ -171,7 +173,7 @@ public class PolyTest {
 
     @Test
     public void valid() {
-        Poly poly = new PolyImpl();
+        Poly poly = Poly.create();
         assertTrue("Expect empty polygon to be valid.", poly.valid());
 
         poly.add(Coordinate.of(0, 0));
@@ -183,7 +185,7 @@ public class PolyTest {
 
     @Test
     public void invalid() {
-        Poly poly = new PolyImpl();
+        Poly poly = Poly.create();
 
         poly.add(Coordinate.of(Double.NEGATIVE_INFINITY, 0));
         assertFalse("Expect polygon to be invalid.", poly.valid());

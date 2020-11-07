@@ -1,5 +1,7 @@
-package com.primalimited.poly;
+package com.primalimited.smoothing.model;
 
+import com.primalimited.smoothing.model.Coordinate;
+import com.primalimited.smoothing.model.Poly;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,7 +19,7 @@ public class CoordinateTest {
     public void testInequality() {
         Coordinate c0 = Coordinate.of(0.0, 10.0);
         assertFalse("equals(null)", c0.equals(null));
-        assertFalse("equals(wrong type)", c0.equals(new PolyImpl()));
+        assertFalse("equals(wrong type)", c0.equals(Poly.create()));
     }
 
     @Test
