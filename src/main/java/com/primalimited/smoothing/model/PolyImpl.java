@@ -8,11 +8,11 @@ import java.util.Objects;
 class PolyImpl implements Poly {
     private List<Coordinate> vertices;
 
-    public PolyImpl() {
+    PolyImpl() {
         this.vertices = new ArrayList<>();
     }
 
-    public PolyImpl(List<Coordinate> vertices) {
+    PolyImpl(List<Coordinate> vertices) {
         this.vertices = new ArrayList<>(vertices);
     }
 

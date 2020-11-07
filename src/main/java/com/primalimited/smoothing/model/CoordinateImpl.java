@@ -6,7 +6,7 @@ class CoordinateImpl implements Coordinate {
     private final double x;
     private final double y;
 
-    public CoordinateImpl(double x, double y) {
+    CoordinateImpl(double x, double y) {
         this.x = x;
         this.y = y;
     }

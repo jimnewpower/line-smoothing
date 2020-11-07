@@ -21,10 +21,6 @@ public class ChaikinSmoother implements PolySmoother {
         this.fraction = CHAIKIN_FRACTION_DEFAULT;
     }
 
-    float getChaikinFraction() {
-        return fraction;
-    }
-
     @Override
     public Poly smooth(Poly poly) {
         Objects.requireNonNull(poly, "poly");
