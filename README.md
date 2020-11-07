@@ -12,7 +12,7 @@ original.add(Coordinate.of(10, 10));
 original.add(Coordinate.of(0, 10));
 original.closePolygon();
 
-Poly smoothed = new ChaikinSmoother().smooth(original);
+Poly smoothed = PolySmoother.chaikin().smooth(original);
 ```
 
 ## Example 1 (Square with 1 iteration)

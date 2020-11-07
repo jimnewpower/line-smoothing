@@ -14,22 +14,11 @@ import java.util.Objects;
 public class ChaikinSmoother implements PolySmoother {
     static final int MINIMUM_POLY_N_VERTICES = 3;
     static final float CHAIKIN_FRACTION_DEFAULT = 0.25f;
-    static final float CHAIKIN_FRACTION_MINIMUM = 0.05f;
-    static final float CHAIKIN_FRACTION_MAXIMUM = 0.45f;
 
     private final float fraction;
 
     public ChaikinSmoother() {
         this.fraction = CHAIKIN_FRACTION_DEFAULT;
-    }
-
-    public ChaikinSmoother(float fraction) {
-        float fractionToUse = fraction;
-        if (fractionToUse < CHAIKIN_FRACTION_MINIMUM)
-            fractionToUse = CHAIKIN_FRACTION_MINIMUM;
-        if (fractionToUse > CHAIKIN_FRACTION_MAXIMUM)
-            fractionToUse = CHAIKIN_FRACTION_MAXIMUM;
-        this.fraction = fractionToUse;
     }
 
     float getChaikinFraction() {
