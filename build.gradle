@@ -4,7 +4,7 @@ plugins {
     id 'info.solidsoft.pitest' version '1.5.2'
 }
 
-group 'org.example'
+group 'com.primalimited'
 version '1.0-SNAPSHOT'
 
 repositories {
